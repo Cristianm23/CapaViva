@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7f5">
+  <title>CapaViva | Dashboard IoT</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script defer src="/js/dashboard.bundle.js?v=2"></script>
+</head>
+<body>
+  <main class="dashboard-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="CapaViva inicio">
+        <span class="brand-mark" aria-hidden="true">CV</span>
+        <span><strong>CapaViva</strong><small>Monitor de sensores IoT</small></span>
+      </a>
+      <div class="connection" id="connection-status" data-state="loading" role="status" aria-live="polite">
+        <span class="connection-dot"></span>
+        <span id="connection-label">Conectando a Firebase…</span>
+      </div>
+    </header>
+
+    <section class="intro">
+      <div>
+        <p class="eyebrow">CAPA DE APLICACIÓN</p>
+        <h1>Panel de monitoreo</h1>
+        <p class="intro-copy">Lecturas recibidas desde el nodo de sensores.</p>
+      </div>
+      <p class="updated-at">Última actualización <strong id="last-updated">—</strong></p>
+    </section>
+
+    <section class="metric-grid" aria-label="Lectura actual">
+      <article class="metric-card temperature-card">
+        <div class="metric-heading"><span class="metric-icon">°</span><span>Temperatura</span></div>
+        <p class="metric-value"><span id="current-temperature">--</span><span class="metric-unit">°C</span></p>
+        <p class="metric-caption">Lectura más reciente</p>
+      </article>
+      <article class="metric-card humidity-card">
+        <div class="metric-heading"><span class="metric-icon">%</span><span>Humedad relativa</span></div>
+        <p class="metric-value"><span id="current-humidity">--</span><span class="metric-unit">%</span></p>
+        <p class="metric-caption">Lectura más reciente</p>
+      </article>
+      <article class="metric-card bulb-card">
+        <div class="metric-heading"><span class="metric-icon bulb-icon" aria-hidden="true">●</span><span>Bombillo</span></div>
+        <div class="bulb-state">
+          <span id="bulb-indicator" class="bulb-indicator" data-on="false" aria-hidden="true"></span>
+          <span id="current-bulb">Sin lectura</span>
+        </div>
+        <p class="metric-caption">Estado simulado del actuador</p>
+      </article>
+    </section>
+
+    <section class="charts-grid" aria-label="Gráficas de lecturas recientes">
+      <article class="panel chart-panel">
+        <div class="panel-heading"><div><p class="eyebrow">HISTÓRICO</p><h2>Temperatura</h2></div><span class="chart-unit">°C</span></div>
+        <div class="chart-wrap"><canvas id="temperature-chart" aria-label="Gráfica de temperatura"></canvas></div>
+      </article>
+      <article class="panel chart-panel">
+        <div class="panel-heading"><div><p class="eyebrow">HISTÓRICO</p><h2>Humedad relativa</h2></div><span class="chart-unit">%</span></div>
+        <div class="chart-wrap"><canvas id="humidity-chart" aria-label="Gráfica de humedad relativa"></canvas></div>
+      </article>
+    </section>
+
+    <section class="lower-grid">
+      <article class="panel table-panel">
+        <div class="panel-heading"><div><p class="eyebrow">REGISTRO</p><h2>Últimas lecturas</h2></div><span class="subtle-label">10 más recientes</span></div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Hora</th><th>Temperatura</th><th>Humedad</th><th>Bombillo</th></tr></thead>
+            <tbody id="readings-body"><tr><td colspan="4" class="empty-row">Esperando datos…</td></tr></tbody>
+          </table>
+        </div>
+      </article>
+      <article class="panel stats-panel">
+        <div class="panel-heading"><div><p class="eyebrow">RESUMEN</p><h2>Estadísticas</h2></div><span class="subtle-label">Últimas 100</span></div>
+        <div class="stats-group">
+          <h3>Temperatura <span>°C</span></h3>
+          <dl><div><dt>Mínimo</dt><dd id="temp-min">--</dd></div><div><dt>Máximo</dt><dd id="temp-max">--</dd></div><div><dt>Promedio</dt><dd id="temp-avg">--</dd></div></dl>
+        </div>
+        <div class="stats-group">
+          <h3>Humedad <span>%</span></h3>
+          <dl><div><dt>Mínimo</dt><dd id="humidity-min">--</dd></div><div><dt>Máximo</dt><dd id="humidity-max">--</dd></div><div><dt>Promedio</dt><dd id="humidity-avg">--</dd></div></dl>
+        </div>
+        <p class="reading-count"><span id="reading-count">0</span> lecturas consideradas</p>
+      </article>
+    </section>
+    <footer>Los datos se leen del nodo <code>lecturas</code> de Firebase Realtime Database.</footer>
+  </main>
+</body>
+</html>

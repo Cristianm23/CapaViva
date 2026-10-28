@@ -1,0 +1,30 @@
+# Variables locales: conserva solo el ejemplo versionable.
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Dependencias y entornos locales.
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Configuración y caché local de Firebase CLI.
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+ui-debug.log
+ui-debug.*.log
+
+# Claves de servicio y certificados privados.
+serviceAccountKey.json
+*serviceAccount*.json
+firebase-adminsdk-*.json
+*.pem
+
+# Salidas generadas por Rollup.
+static/js/dashboard.bundle.js
+public/js/dashboard.bundle.js
+*.map

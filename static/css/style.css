@@ -1,0 +1,114 @@
+:root {
+  color-scheme: light dark;
+  --page: #f4f7f5;
+  --surface: #ffffff;
+  --surface-soft: #f8faf9;
+  --text: #18231e;
+  --muted: #738078;
+  --line: #e7ece8;
+  --green: #13835d;
+  --green-soft: #e6f4ed;
+  --blue: #3976b9;
+  --blue-soft: #eaf2fa;
+  --amber: #e7a92e;
+  --shadow: 0 12px 36px rgba(31, 54, 42, .055);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #111814;
+    --surface: #19221d;
+    --surface-soft: #202b25;
+    --text: #ecf3ee;
+    --muted: #9aa89f;
+    --line: #2b3830;
+    --green: #65c69b;
+    --green-soft: #203b2f;
+    --blue: #81b5e9;
+    --blue-soft: #243547;
+    --amber: #f1bd50;
+    --shadow: 0 12px 36px rgba(0, 0, 0, .14);
+  }
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.dashboard-shell { width: min(1220px, calc(100% - 48px)); margin: 0 auto; }
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 25px 0; border-bottom: 1px solid var(--line); }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; }
+.brand-mark { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 13px; background: #dff1e7; color: #15754f; font: 800 14px Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.06em; }
+.brand strong, .brand small { display: block; }
+.brand strong { font: 800 18px Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.04em; }
+.brand small { margin-top: 2px; color: var(--muted); font-size: 11px; }
+.connection { display: inline-flex; align-items: center; gap: 9px; color: var(--muted); font-size: 12px; font-weight: 600; }
+.connection-dot { width: 8px; height: 8px; border-radius: 50%; background: #aab4ad; }
+.connection[data-state="connected"] .connection-dot { background: #23a66f; box-shadow: 0 0 0 4px rgba(35, 166, 111, .12); }
+.connection[data-state="error"] .connection-dot { background: #dd625d; }
+.intro { display: flex; justify-content: space-between; align-items: end; padding: 35px 0 23px; }
+.eyebrow { margin: 0 0 8px; color: var(--green); font-size: 9px; font-weight: 700; letter-spacing: .13em; }
+h1, h2, h3, p { margin-top: 0; }
+h1, h2, h3 { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+h1 { margin-bottom: 5px; font-size: clamp(25px, 3vw, 33px); letter-spacing: -.055em; }
+.intro-copy { margin: 0; color: var(--muted); font-size: 13px; }
+.updated-at { margin: 0 0 3px; color: var(--muted); font-size: 11px; }
+.updated-at strong { margin-left: 5px; color: var(--text); font-weight: 600; }
+.metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.metric-card, .panel { border: 1px solid var(--line); border-radius: 17px; background: var(--surface); box-shadow: var(--shadow); }
+.metric-card { min-height: 157px; padding: 19px 21px; }
+.metric-heading { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 11px; font-weight: 600; }
+.metric-icon { display: grid; width: 27px; height: 27px; place-items: center; border-radius: 9px; background: var(--green-soft); color: var(--green); font-size: 15px; font-weight: 700; }
+.humidity-card .metric-icon { background: var(--blue-soft); color: var(--blue); }
+.bulb-icon { color: var(--amber); font-size: 10px; }
+.metric-value { display: flex; align-items: baseline; gap: 6px; margin: 14px 0 2px; font: 800 34px Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.06em; }
+.metric-unit { color: var(--muted); font: 600 15px Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: 0; }
+.metric-caption { margin: 0; color: var(--muted); font-size: 10px; }
+.bulb-state { display: flex; align-items: center; gap: 11px; margin: 18px 0 14px; font: 700 19px Inter, ui-sans-serif, system-ui, sans-serif; }
+.bulb-indicator { width: 18px; height: 18px; border-radius: 50%; background: #abb3ae; box-shadow: inset 0 1px 3px rgba(0, 0, 0, .18); }
+.bulb-indicator[data-on="true"] { background: #ffd34f; box-shadow: 0 0 18px rgba(255, 211, 79, .68); }
+.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+.panel { padding: 19px 21px; }
+.panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.panel-heading .eyebrow { margin-bottom: 4px; }
+h2 { margin: 0; font-size: 16px; letter-spacing: -.035em; }
+.chart-unit, .subtle-label { color: var(--muted); font-size: 10px; }
+.chart-wrap { position: relative; height: 205px; margin-top: 15px; }
+.lower-grid { display: grid; grid-template-columns: 1.55fr 1fr; gap: 15px; margin-top: 15px; }
+.table-scroll { overflow-x: auto; margin-top: 15px; }
+table { width: 100%; border-collapse: collapse; white-space: nowrap; text-align: left; }
+th { padding: 0 9px 10px; color: var(--muted); font-size: 9px; font-weight: 600; }
+td { padding: 11px 9px; border-top: 1px solid var(--line); font-size: 10px; }
+td:first-child, th:first-child { padding-left: 0; }
+.empty-row { padding: 24px 0; color: var(--muted); text-align: center; }
+.table-bulb { display: inline-flex; align-items: center; gap: 6px; }
+.table-bulb::before { width: 6px; height: 6px; border-radius: 50%; background: #abb3ae; content: ''; }
+.table-bulb.on::before { background: #e9b22f; }
+.stats-group { padding-top: 16px; }
+.stats-group + .stats-group { margin-top: 13px; border-top: 1px solid var(--line); }
+.stats-group h3 { margin: 0 0 12px; font-size: 11px; }
+.stats-group h3 span { color: var(--muted); font: 500 10px Inter, ui-sans-serif, system-ui, sans-serif; }
+.stats-group dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0; }
+.stats-group dl div { padding: 9px 10px; border-radius: 10px; background: var(--surface-soft); }
+.stats-group dt { color: var(--muted); font-size: 9px; }
+.stats-group dd { margin: 5px 0 0; font: 700 14px Inter, ui-sans-serif, system-ui, sans-serif; }
+.reading-count { margin: 15px 0 0; color: var(--muted); font-size: 10px; }
+.reading-count span { color: var(--text); font-weight: 700; }
+footer { padding: 22px 0 28px; color: var(--muted); font-size: 10px; }
+code { color: var(--green); }
+
+@media (max-width: 760px) {
+  .dashboard-shell { width: min(100% - 30px, 560px); }
+  .intro { align-items: start; flex-direction: column; gap: 14px; }
+  .metric-grid { grid-template-columns: 1fr; gap: 10px; }
+  .metric-card { min-height: 135px; }
+  .charts-grid, .lower-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
+  .chart-wrap { height: 190px; }
+  .updated-at { align-self: flex-start; }
+}
+
+@media (max-width: 420px) {
+  .dashboard-shell { width: calc(100% - 22px); }
+  .topbar { align-items: flex-start; gap: 10px; }
+  .connection { max-width: 135px; font-size: 10px; }
+  .panel { padding: 16px 13px; }
+  th, td { padding-right: 6px; padding-left: 6px; font-size: 9px; }
+}

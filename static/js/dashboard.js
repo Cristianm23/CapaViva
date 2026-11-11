@@ -30,13 +30,28 @@ function cambiarEstado(estado, mensaje) {
 }
 
 function horaDe(fecha) {
-  const milisegundos = Number(fecha);
+  const milisegundos = typeof fecha === 'number'
+    ? fecha
+    : (typeof fecha === 'string' && /^\d+$/.test(fecha) ? Number(fecha) : Date.parse(fecha));
   if (!Number.isFinite(milisegundos)) return '—';
   return new Date(milisegundos).toLocaleTimeString('es-CO', {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
   });
+}
+
+function fechaDeClavePush(clave) {
+  const alfabeto = '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
+  if (typeof clave !== 'string' || clave.length < 8) return null;
+
+  let milisegundos = 0;
+  for (const caracter of clave.slice(0, 8)) {
+    const digito = alfabeto.indexOf(caracter);
+    if (digito < 0) return null;
+    milisegundos = milisegundos * 64 + digito;
+  }
+  return milisegundos;
 }
 
 function formatoNumero(valor) {
@@ -154,14 +169,23 @@ function iniciarDashboard() {
   try {
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
-    const ultimasLecturas = query(ref(database, 'lecturas'), orderByKey(), limitToLast(100));
+    // El receptor guarda cada lectura en la raíz con una clave push de Firebase.
+    const ultimasLecturas = query(ref(database), orderByKey(), limitToLast(100));
 
     // La suscripción actualiza la interfaz cada vez que Firebase recibe una lectura.
     onValue(ultimasLecturas, (snapshot) => {
       const lecturas = [];
-      snapshot.forEach((hijo) => lecturas.push(hijo.val()));
+      snapshot.forEach((hijo) => {
+        const valor = hijo.val();
+        if (valor && typeof valor === 'object') {
+          lecturas.push({ ...valor, fecha: valor.fecha ?? fechaDeClavePush(hijo.key) });
+        }
+      });
       mostrarLecturas(lecturas);
-    }, () => cambiarEstado('error', 'No se pudo leer Firebase'));
+    }, (error) => {
+      console.error('Error al recibir actualizaciones de Firebase:', error);
+      cambiarEstado('error', 'No se pudo leer Firebase');
+    });
   } catch (error) {
     console.error('Error al iniciar Firebase:', error);
     cambiarEstado('error', 'Error de configuración de Firebase');
